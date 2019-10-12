@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-9">
+      <div class="panel panel-default">
+        <div class="panel-body" *ngIf="allOrders">
+          <div class="row">
+            <div class="col-md-12 lead">Order history<hr></div>
+          </div>
+          <div class="row ticket" *ngFor="let order of pagedOrders">
+            <div class="col-md-12">
+                <!-- items being paged -->
+                <div class="stub pull-left" (click)="showReceipt(order)">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <img  style="height: 50px; margin-left: 10px; margin-right: 10px;" src= "../../assets/purchase-order.ico">
+                        </div>
+                        <div class="col-xs-6">
+                            <h6 style="border-bottom: 0.5px solid;">Ref: {{order.orderNumber}}</h6>
+                            <span style="font-size: 12px;">{{order.date.format("L")}}</span><span style="font-weight: bold; font-size: 14px; margin-left: 5px;">£{{(order.bill.total+order.bill.discount).toFixed(2)}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div (click)="orderAgain(order)" style="text-align: center; height: 70px;" class="check pull-right">Order again</div>
+            </div>
+          </div>
+          <div style="text-align: center;" *ngIf=" pager.pages && currentPage < pager.pages.length">
+            <a href="javascript:void(0)" (click)="loadMore()">Load more</a><br>
+            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+          </div>
+          <hr>
+        </div>
+        <div class="panel-body" *ngIf="!allOrders">
+          <div class="row">
+            <div class="col-md-12 lead">Order history<hr></div>
+          </div>
+          <div class="row">
+            <p>No orders to show</p>
+          </div>
+          <hr>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

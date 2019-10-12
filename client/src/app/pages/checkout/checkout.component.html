@@ -1,0 +1,445 @@
+<div class="container">
+	<!-- Nav tabs -->
+    <tabs *ngIf="!ordered">
+      <tab [tabTitle]="'Contact details'">
+  		<div class="card card-outline-secondary">
+		    <div class="card-header">
+		        <h3 class="mb-0">Contact Details</h3>
+		    </div>
+		    <div class="card-block" *ngIf="user">
+		        <form [formGroup] = "form" (ngSubmit) = "next(form.value, 1)" class="form" role="form" autocomplete="off">
+		            <div class="form-group">
+		                <label for="inputName">Name</label>
+		                <input type="text" class="form-control" id="inputName" placeholder="Full name" formControlName = "name" value={{user.name}}>
+				      	<div *ngIf="form.controls.name.errors">
+						    <small [hidden]="!form.controls.name.errors.required || !submitted" style="color: red">Name is required</small>
+						    <small [hidden]="!form.controls.name.errors.pattern" style="color: red">Invalid Name (Letters Only)</small>
+						    <small [hidden]="!form.controls.name.errors.maxlength" style="color: red">Name must be less than 25 characters </small>
+				    	</div>
+		            </div>
+		            <div class="form-group">
+		                <label for="inputMomileNumber">Mobile</label>
+		                <input type="tel" class="form-control" id="inputMobileNumber" placeholder="Mobile number" required="" formControlName = "mobile" value={{user.mobile}}>
+		                <div *ngIf="form.controls.mobile.errors">
+						    <small [hidden]="!form.controls.mobile.errors.required || !submitted" style="color: red">Mobile number required</small>
+						    <small [hidden]="!submitted || !form.controls.mobile.errors.minlength || form.controls.mobile.errors.required" style="color: red">Invalid phone (Min Length 11 digits)</small>
+						    <small [hidden]="!form.controls.mobile.errors.pattern" style="color: red">Invalid input (numbers only)</small>
+    					    <small [hidden]="!form.controls.mobile.errors.maxlength" style="color: red">Mobile number must not exceed 16 digits</small>
+				    	</div>
+		            </div>
+		            <div class="form-group">
+            			<button type="submit" class="btn btn-success float-right">Next</button>
+        			</div>
+		        </form>
+		    </div>
+		</div>
+      </tab>
+      <tab [tabTitle]="'Delivery details'">
+      	<div class="card card-outline-secondary">
+    			<div class="card-header">
+        			<h3 class="mb-0">Delivery Details</h3>
+		    	</div>
+		    <div class="card-block">
+		    	<div *ngIf= "newAddress; then addAddress; else chooseAddress"></div>
+		    	<ng-template #addAddress>
+			        <form [formGroup] = "form" (ngSubmit) = "proceedToPayment(form.value, 2)" class="form" role="form" autocomplete="off">
+						<div class="form-group">
+							<h6 for="streetNumber">Delivery Address <label *ngIf ="addresses.length>0">| <a style="cursor: pointer;" href="javascript:void(0)" (click)="addressToggle()">Choose from the address book</a></label></h6>
+							<input type="text" class = "form-control" id="streetNumber" placeholder="Street No / House name" required="" value="" formControlName = "streetNumber">
+							<div *ngIf="form.controls.streetNumber.errors">
+							    <small [hidden]="!form.controls.streetNumber.errors.required || !submitted" style="color: red">Street number or house name is required</small>
+							    <small [hidden]="!form.controls.streetNumber.errors.pattern" style="color: red">Invalid input (Letters & numbers Only)
+							    </small>
+							    <small [hidden]="!form.controls.streetNumber.errors.maxlength" style="color: red"> Street number must be less than 50 characters)
+							    </small>
+				    		</div>
+						</div>
+						<div class="form-group">
+							<input type="text" class = "form-control" id="streetName" placeholder="Street name" required="" value="" formControlName = "streetName">
+							<div *ngIf="form.controls.streetName.errors">
+							    <small [hidden]="!form.controls.streetName.errors.required || !submitted" style="color: red">Street name required</small>
+							    <small [hidden]="!form.controls.streetName.errors.pattern" style="color: red">Invalid input (Letters & numbers Only)</small>
+							    <small [hidden]="!form.controls.streetName.errors.maxlength" style="color: red">Street name must be less than 50 characters</small>
+				    		</div>
+						</div>
+						<div class="form-group">
+							<input type="text" class="form-control" id="city" placeholder="City/Town" required="" value="" formControlName = "city">
+							<div *ngIf="form.controls.city.errors">
+							    <small [hidden]="!form.controls.city.errors.required || !submitted" style="color: red">City name required</small>
+							    <small [hidden]="!form.controls.city.errors.pattern" style="color: red">Invalid input (Letters Only)</small>
+							    <small [hidden]="!form.controls.city.errors.maxlength" style="color: red">city name must be less than 50characters</small>
+				    		</div>
+						</div>
+						<div class="form-group">
+							<input type="text" class="form-control" id ="postdode" placeholder="Postcode" required="" value="" formControlName = "postcode">
+							<div *ngIf="form.controls.postcode.errors">
+							    <small [hidden]="!form.controls.postcode.errors.required || !submitted" style="color: red">Postcode required</small>
+							    <small [hidden]="!form.controls.postcode.errors.pattern" style="color: red">Invalid input (Letters & numbers Only)</small>
+							    <small [hidden]="!form.controls.postcode.errors.maxlength" style="color: red">Postcode must be less than 10 characters</small>
+				    		</div>
+						</div>
+			        </form>
+		        </ng-template>
+		        <ng-template #chooseAddress>
+		        	<h6>Delivery address</h6>
+		        	<select #address (change) = "selectAddress(address.value)">
+					  <option *ngFor = "let address of addresses; let i = index" value={{i}}>{{address.streetName}}</option>
+					</select><br><br>
+					<div *ngIf = "chosenAddress" style="border-width: 1px; padding: 5px; border-style: dotted;" class="col-md-3">
+						<span>{{chosenAddress.streetNumber}}</span><br>
+						<span>{{chosenAddress.streetName}}</span><br>
+						<span>{{chosenAddress.city}}</span><br>
+						<span>{{chosenAddress.postcode}}</span><br>
+					</div>
+					<a style="cursor: pointer;" href="javascript:void(0)" (click)="addressToggle()">Add a new address</a>
+		        </ng-template>
+		        <hr>
+			    <form *ngIf="user" [formGroup] = "form" (ngSubmit) = "proceedToPayment(form.value, 2)" class="form" role="form" autocomplete="off">
+		        	<div>
+						<h6>Delivery time</h6>
+						<select required name = "deliveryTime" formControlName = "deliveryTime" required>
+		            	  <option *ngFor="let time of deliveryTime" value="{{time}}">{{time}}</option>
+						</select>
+					</div>
+					<hr>
+			        <div>
+			        	<h6>Your comment for us:</h6>
+			        	<textarea style="max-width: 100%; border-radius: 5px;" rows="4" cols="50" placeholder="e.g. the gate pincode is 123" formControlName = "comment"></textarea>
+			        	<div *ngIf="form.controls.comment.errors">
+							<small [hidden]="!form.controls.comment.errors.maxlength" style="color: red">Your comment must be less than 250 characters</small>
+				    	</div>
+			        </div>
+					<div>
+						<div class="form-group">
+				            <button (click) = "tabTogle(0)" type="button" class="btn btn-info float-left">Back</button>
+				        </div>
+				        <div class="form-group">
+				            <button type="submit" class="btn btn-success float-right">Proceed to payment</button>
+				        </div>
+			        </div>
+			    </form>
+		    </div>
+		</div>
+      </tab>
+      <tab [tabTitle]="'Payment'">
+        <div class="card card-outline-secondary">
+    			<div class="card-header">
+        			<h3 class="mb-0">Payment</h3>
+		    	</div>
+		    <div class="card-block">
+		        <form (ngSubmit)="proceedToConfirm(3)" class="form" role="form" autocomplete="off">
+		        	<h6>Payment Type</h6>
+		        	<div class="form-group" class="row">
+		        		<div class="col-sm-1">
+							<label for="payment">Cash</label>
+							<input type="radio" name = "paymentType" required="" checked="checked" value="cash" [(ngModel)] = "paymentType">
+						</div>
+						<!--
+						<div class="col-sm-1">
+							<label for="payment">Card</label>
+							<input type="radio" [(ngModel)] = "paymentType" name = "paymentType" required="" value="card">
+						</div>
+						-->
+						<br><br>
+					</div>
+						<div>
+						<div class="form-group">
+			                <button (click) = "tabTogle(1)" type="button" class="btn btn-info float-left">Back</button>
+			            </div>
+			            <div class="form-group">
+			                <button type="submit" class="btn btn-success float-right">Confirmation</button>
+			            </div>
+			        </div>
+		        </form>
+		    </div>
+		</div>
+      </tab>
+      <tab [tabTitle]="'Confirmation'">
+      	<div class="card card-outline-secondary">
+		    <div class="card-header">
+				<h3 class="mb-0">Confirmation</h3>
+	    	</div>
+			<div class="card-block">
+				<h6>Terms and conditions:</h6>
+				<div class="form-control terms">
+					<p> 
+						These are our terms and conditions. They apply each time you use our services and we will assume that you’ve read them beforehand. They do change from time to time so please re-read them each time you order.
+					</p>
+					<p>
+						<strong>AGREEMENT</strong><br>
+						These Terms and Conditions comprise the following sections:<br>
+							•	Orders<br>
+							•	General Terms<br>
+							•	Cancellation Policy<br>
+						Which together form the basis of the relationship between us and both you and we agree to be bound by what each section says.
+					</p>
+					<p>
+						<strong>ORDERS</strong><br>
+						•	AVAILABILITY<br>
+						Acknowledgement of your order does not mean that we have accepted it. We will confirm to you when we have accepted your order and that is when a binding obligation will exist between us.
+					</p>
+					<p>
+						If we do not accept your order or if we have a problem relating to it, we will tell you as soon as we can and (if appropriate) refund the payment you have made to us.
+					</p>
+					<p>
+						An order can be placed at the times advertised. Any orders placed outside those times will be processed in the next opening period.
+					</p>
+					<p>
+						•	PAYMENT<br>
+						We accept payment by Cash or bank transfer ONLY.
+
+					</p>
+					<p>
+						•	DELIVERY & COLLECTION<br>
+						Our aim is to deliver your Shisha within 45 minutes of processing your order but this is a target time which may be affected by circumstances which we are unable to control and so we do not guarantee that any time we quote will be met unless you tell us in advance and we agree when we accept your order that time with you.
+					</p>
+					<p>
+						On delivery, we may ask for proof of your age and, if you are unable to supply this when requested, we may cancel your order without having the obligation to refund to you any part of the money you have paid to us.
+					</p>
+					<p>
+						The Shisha must be available for collection by us<br>
+						•	at the same address to which it was delivered;<br>
+						•	in the same condition (except for consumables) in which it was delivered to you; and<br>
+						•	at the time we specify on or before we deliver.
+					</p>
+					<p>
+						We may charge you reasonable additional sums if:<br>
+						•	we are unable to collect the Shisha at the place and time we have specified; or<br>
+						•	the equipment we supply to you has been misused damaged is dirty or is not complete.
+					</p>
+					<p>
+						•	SUBSTITUTE PRODUCTS<br>
+						Whilst we will always try to meet the exact specification you request for your order, you understand that it may not be possible to follow each recipe exactly.
+					</p>
+					<p>
+						You understand and agree that we may substitute all and any ingredients used in the Shisha for others which, in our opinion are as close as possible to the specified ingredient and that such substitution will not give rise to any claim under the agreement between us.
+					</p>
+					<p>
+						•	HEALTH AND SAFETY<br>
+						You agree to read and follow all the instructions we supply with the Shisha and any other products we supply. If you do not understand any of our instructions, you agree not to use the Shisha until you have contacted us for an explanation.
+					</p>
+					<p>
+						Using a Shisha can cause dizziness or drowsiness. You agree to make sure that all the people who use it are aware that driving or operating machinery after using the Shisha could be dangerous.
+					</p>
+					<p>
+						LONG TERM USE OF SHISHA MAY CAUSE HEALTH PROBLEMS AND MAY BE ADDICTIVE.
+					</p>
+					<p>
+						You must not use any products with the Shisha which we have not supplied.
+					</p>
+					<p>
+						You accept that using a Shisha can be dangerous and that fire and fire damage can result in misuse. Sparks can fly from it and you must ensure that the Shisha is placed on a stable base and in a position which will prevent damage being caused.
+					</p>
+					<p>
+						If we have not lit the Shisha for you, then it should be lit in an environment which cannot be affected by smoke.
+					</p>
+					<p>
+						You warrant that all users of the Shisha are over the age of 18 years at the time they use the Shisha.
+					</p>
+					<p>
+						You understand, and will advise all users of the Shisha before they use it, that the use of A Shisha may cause harm to health and may harm the health of others who are in the vicinity of the Shisha.
+					</p>
+					<p>
+						<strong>IF YOU FAIL TO FOLLOW THESE CONDITIONS AND THE ADVICE AND INSTRUCTIONS WE GIVE YOU WHEN DELIVERING THE SHISHA WE WILL NOT BE RESPONSIBLE FOR ANY DAMAGE TO PROPERTY AND GOODS WHICH MAY OCCUR.</strong>
+					</p>
+					<p>
+						•	CANCELLATION/RETURNS<br>
+						You understand and agree that most of the products we supply are supplied for immediate use and have been prepared to your specifications and that, as a result, your right to cancel the agreement between us is limited.
+					</p>
+					<p>
+						If you are buying the Shisha and the services we supply as a consumer, our Cancellation Policy applies.
+					</p>
+					<p>
+						you may only return Goods if they:<br>
+						•	are of unsatisfactory quality; or<br>
+						•	are not fit for their purpose; or<br>
+						•	do not match the description of the Goods that you ordered from us; or<br>
+						•	have faults when they are delivered to you; or<br>
+						•	have been damaged in transit.
+					</p>
+					<p>
+						You must contact us immediately to arrange for their return. We do not make refunds for any products which have been used unless they are faulty.
+					</p>
+					<p>
+						<strong>GENERAL TERMS</strong>
+					</p>
+					<p>
+						•	DEFINITIONS
+						The following words have the following meanings in these Terms and Conditions:
+					</p>
+					<p>
+						•	We are Cloud 7 Shisha of 179a Shirley Road Southampton SO153FG
+						•	You are a visitor to the Site.
+						•	User means any person, firm or company using this service for any purpose.
+					</p>
+					<p>
+						•	YOUR PROMISES TO US<br>
+						You agree that:<br>
+						•	You have the right to make this Agreement with us and that you are over the age of 18 years.<br>
+						•	You will read the terms and conditions<br>
+						•	You won’t copy, imitate or use the trademarks and/or designs and/or layout or anything else which would usually amount to intellectual property and which we own.
+					</p>
+					<p>
+						•	LIMITATION OF LIABILITY<br>
+						As far as we are allowed by law we deny liability for any losses of all kind which you incur from using our service. You use the service at your own risk.
+					</p>
+					<p>
+						However, nothing in these Terms and Conditions excludes or restricts our liability for death or personal injury resulting from any negligence or fraud on our part.
+					</p>
+					<p>
+						•	MODIFICATIONS TO THESE TERMS AND CONDITIONS & THE SITE<br>
+                        You agree to re-read these Terms and Conditions each time you use the service so as to understand any changes we’ve made to them.
+					</p>
+					<p>
+						If we change our service these Terms and Conditions will apply to any changes we make.
+					</p>
+					<p>
+						•	GENERAL MATTERS<br>
+						These Terms and Conditions are made under the laws of England and Wales and that is the only jurisdiction which can govern them.
+					</p>
+					<p>
+						We and you agree that these Terms and Conditions do not form the basis of any partnership or co-venture.
+					</p>
+					<p>
+						These Terms and Conditions supersede any previous terms and conditions we have published and represent the entire understanding between you and us.
+					</p>
+					<p>
+						Time will not be of the essence in any part of any agreement between you and us.
+					</p>
+					<p>
+						All parties acknowledge and agree that they have not entered into any agreement between them in reliance on anything said or promised by the other which is not in these Terms and Conditions.
+					</p>
+					<p>
+						If a Court or other body says that any part of these Terms and Conditions is unenforceable, the rest of them will stand.
+					</p>
+					<p>
+						If either you or we need to give formal notice to the other, it must be done by email to the address each of us gives to the other from time to time.
+					</p>
+					<p>
+						These Terms and Conditions contain the entire understanding between you and us.
+					</p>
+					<p>
+						<strong>Data Collected</strong><br>
+						Without limitation, all or any of the following Data may be collected by the Site from time to time:<br>
+						•	name;<br>
+						•	date of birth;<br>
+						•	gender;<br>
+						•	contact information such as email addresses and telephone numbers;<br>
+						•	operating system (automatically collected); and
+					</p>
+					<p>
+						<strong>Our Use of Data</strong><br>
+						We will keep any personal Data you submit for 6 months.
+					</p>
+					<p>
+						Unless we are obliged or allowed by law, and subject to “Third Party Sites and Services” below, we will not disclose your Data to third parties. This does not include the companies which form part of our group.
+					</p>
+					<p>
+						All personal Data is stored securely in accordance with the principles of the Data Protection Act 1998.
+					</p>
+					<p>
+						We use your Data so as to give you the best possible service and experience when using the service
+					</p>
+					<p>
+						Specifically, Data may be used by us for the following reasons:<br>
+						•	internal record keeping;
+						•	improvement of our products/services;
+						•	transmission by email of promotional materials that may be of interest to you;
+						•	contact for market research purposes which may be done using email, telephone, fax or mail; or
+						•	to customise or update the Site.
+					</p>
+					<p>
+						<strong>INFORMATION ABOUT THE EXERCISE OF THE RIGHT TO CANCEL THIS CONTRACT</strong>
+					</p>
+					<p>
+						IMPORTANT NOTE – these cancellation provisions do not apply to foodstuffs and beverages nor to circumstances where you are not buying as a consumer.
+					</p>
+					<p>
+						IF YOU WISH TO CANCEL AN ORDER YOU SHOULD NOTIFY US AS SOON AS YOU CAN
+					</p>
+					<p>
+						Cancellation less than 24 hours from order – or custom made products
+					</p>
+					<p>
+						NO RIGHT TO CANCEL
+					</p>
+					<p>
+						If you order a product where:<br>
+						you have asked us to deliver to you less than 14 days after the date of your order; and/or we are preparing a Shisha or other product to your specifications
+						the following rights apply if you wish to cancel your order:
+					</p>
+					<p>
+						•	If you cancel before we start processing your order, we will charge and administration fee of 25% of the value of your order and refund the balance to you.<br>
+						•	If you cancel after we have started processing your order but before it is ready to be delivered to you, we will make a charge of 50% of the value of the order to cover administration costs and preparation costs.<br>
+						•	If you cancel after the order is ready for delivery to you, we will charge the full cost of all items.
+					</p>
+					<p>
+						Charges that may occur if our items hired by you are damaged or lost
+					</p>
+					<table>
+					  <tr>
+					    <th>Item</th>
+					    <th>Charge</th>
+					  </tr>
+					  <tr>
+					    <td>Head</td>
+					    <td>£5</td>
+					  </tr>
+					  <tr>
+					    <td>Stem</td>
+					    <td>£10</td>
+					  </tr>
+					  <tr>
+					    <td>Vase</td>
+					    <td>£10</td>
+					  </tr>
+					  <tr>
+					    <td>Hose</td>
+					    <td>£8</td>
+					  </tr>
+					  <tr>
+					    <td>Tongs</td>
+					    <td>£2</td>
+					  </tr>
+					  <tr>
+					    <td>Ice-Pipe</td>
+					    <td>£10</td>
+					  </tr>
+					</table>
+					<br>
+					<p>
+						You agree and understand that at all times it’s your responsibility to look after the hired equipment and how they are used in the case of any hard done. 
+					</p>
+				</div>
+				<ul>
+					<small [hidden]="terms.termsAgree || !submitted" style="color: red">You must agree to the terms and conditions</small>
+					<li>
+						<input type="checkbox" name="terms" [(ngModel)] = "terms.termsAgree">
+						I have read and agree to the terms and conditions above
+					</li>
+					<small [hidden]="terms.ageAgree || !submitted" style="color: red">You must be 18 or over to place an order</small>					
+					<li>
+						<input type="checkbox" name="age" [(ngModel)] = "terms.ageAgree">
+						I am over 18
+					</li>
+				</ul>
+				<div class="form-group">
+	                <button (click) = "tabTogle(2)" type="button" class="btn btn-info float-left">Back</button>
+	            </div>
+	            <div class="form-group">
+	                <button type="button" class="btn btn-success float-right" (click)="placeOrder(3)">Place order</button>
+	            </div>				
+			</div>
+		</div>
+      </tab>
+    </tabs>
+  	<div class="card card-outline-secondary" *ngIf="ordered">
+		<div class="card-block confirmation">
+			<h4>Thank you for your order</h4>
+			<h5>Yes. We heard you loud and clear!<br> We will deliver it to you within the next 45 minutes</h5><br>
+			<div class="form-group">
+            <a routerLink="/home"><button type="button" class="btn btn-success">Back to Homepage</button></a>
+        </div>
+		</div>
+	</div>
+</div>

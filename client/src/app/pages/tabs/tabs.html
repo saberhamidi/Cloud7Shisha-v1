@@ -1,0 +1,4 @@
+<div class="nav nav-tabs wizard" style="text-align: center; margin-top:" *ngIf ="title">
+      <a href="javascript:void(0)" *ngFor="let tab of tabs; let i = index" (click)="selectTab(tab)"[class.current] = "tab.active" [class.done] ="tab.done">{{tab.title}}</a>
+</div>
+<ng-content></ng-content>

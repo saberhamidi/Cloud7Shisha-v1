@@ -1,0 +1,68 @@
+<div class="container" style="max-width: 600px;">
+	<i (click)="close()" class="fa fa-window-close close" aria-hidden="true"></i>
+	<div class="row">
+		<div class="col-md-12" style="text-align: center;">
+			<h5>Delivery Address</h5>
+			<h6>{{order.customer.name}}</h6>
+			<label>{{order.deliveryAddress.streetNumber}} {{order.deliveryAddress.streetName}}, {{order.deliveryAddress.city}}, {{order.deliveryAddress.postcode}}</label><hr>
+			<label>Order received: {{order.date.format("L")}} at {{order.date.format("LT")}}</label>
+		</div>
+	</div>
+	<hr>
+	<div class="row receipt">
+		<div class="col-md-12">
+		    <table class="itemsTable">
+		      <tr>
+		        <th class="firstColumn">Product</th>
+		        <th class="secondColumn">Unit Price</th>
+		        <th class="thirdColumn">Total Price</th>
+		      </tr>
+		      <tr *ngFor="let item of order.basket">
+		        <td>
+		        	<div *ngIf= "item.category == 'shisha'; then shishaa; else others"></div>
+		        	<!-- Shisha Items -->
+		        	<ng-template #shishaa>
+			        	<h6> {{item.quantity}}x {{item.name}}</h6>
+			            <div style="margin-left: 20px;">
+			                <label>Head: <span class="options">{{item.head}}</span></label><br>
+			                <label>Hose: <span class="options">{{item.hose}}</span></label><br>
+			                <label>Base: <span class="options">{{item.base}}</span></label><br>
+			                <label>Flavours: <span *ngFor="let flavour of item.flavours" class="options">{{flavour}}, </span></label>
+			             </div>
+		         	</ng-template>
+
+		         	<!-- Other Items -->
+		         	<ng-template #others>
+		         		<h6> {{item.quantity}}x {{item.name}}</h6>
+		         		<div *ngIf="item.category =='extra-head'">
+	      					<label>Head: <span class="details">{{item.head}}</span></label><br>
+		      				<label>Flavours: <span class="details" *ngFor="let flavour of item.flavours">{{flavour}}, </span></label>
+	      				</div>
+		         	</ng-template>
+		        </td>
+		        <td class="secondColumn">£{{(item.costs/item.quantity).toFixed(2)}}</td>
+		        <td class="thirdColumn">£{{item.costs.toFixed(2)}}</td>
+		      </tr>
+		    </table>
+		    		<!-- Bill Summary block -->
+		<div class="clearfix full-width mb1">
+			<div class="left quarter-width px2">
+				<p class="small bottom-dotted border-color-light-gray relative mb1">
+	    			<span class="bg-white absolute t1">Subtotal</span> <span class="bg-white absolute t1 r0"> &nbsp; £{{order.bill.total.toFixed(2)}}</span>
+	    		</p>
+	    		<p class="small bottom-dotted border-color-light-gray relative mb1" *ngIf="order.bill.discount<0">
+	    			<span class="bg-white absolute t1">Discount (20%)</span> <span class="bg-white absolute t1 r0"> &nbsp; -£{{(order.bill.discount*-1).toFixed(2)}}</span>
+	    		</p>
+			</div>	
+			<div class="col-md-6" style="font-weight: bold; float: right;">
+	          	<hr>
+	          	<p style="float: right;">Total Cost: £{{(order.bill.total+order.bill.discount).toFixed(2)}}</p>
+	        </div>
+		</div>
+		</div>
+	</div>
+	<hr>
+	<div style="text-align: center; padding-top: 10px;">
+		<button type="button" class="btn btn-success" (click) = "orderAgain()">Order again</button>
+	</div>
+</div>

@@ -1,0 +1,47 @@
+<!--Register Form popup -->
+<i class="fa fa-window-close close" aria-hidden="true" (click) ="closeRegister()"></i>
+<h5 md-dialog-title>Register</h5>
+<div md-dialog-content class="card-container"> 
+  <div style="color: red; text-align: center;" *ngIf ="errorMessage">
+    <small>{{errorMessage}}</small>
+  </div>
+  <form [formGroup] = "form" (ngSubmit) = "submitRegister(form.value)" style="display: block;">
+   <div class="form-group">
+      	<input type="text" formControlName = "name" name="name" id="name" tabindex="1" class="form-control" placeholder="Full Name" value="" required>
+      	<div *ngIf="form.controls.name.errors">
+		    <small [hidden]="!form.controls.name.errors.required || !submitted" style="color: red">Name is required</small>
+		    <small [hidden]="!form.controls.name.errors.pattern" style="color: red">Invalid Name (Letters Only)</small>
+        <small [hidden]="!form.controls.name.errors.maxlength" style="color: red">Name exceeded characters limit</small>
+    	</div>
+    </div>
+    <div class="form-group">
+      <input type="email" formControlName = "email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email Address" value="" required>
+      <div *ngIf="form.controls.email.errors">
+			  <small [hidden]="!form.controls.email.errors.required || !submitted" style="color: red">Email is required</small>
+		    <small [hidden]="!form.controls.email.errors.email || form.controls.email.errors.required || !submitted" style="color: red">Invalid email</small>
+        <small [hidden]="!form.controls.email.errors.maxlength" style="color: red">Email too long</small>
+      </div>
+    </div>
+    <div class="form-group">
+      <input type="password" formControlName = "password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" required>
+      <div *ngIf="form.controls.password.errors">
+		    <small [hidden]="!form.controls.password.errors.required || !submitted" style="color: red">Password is required</small>
+        <small [hidden]="!form.controls.password.errors.minlength || !submitted" style="color: red">Password must be at least 6 characters long</small>
+        <small [hidden]="!form.controls.password.errors.maxlength" style="color: red">Password too long</small>                  
+      </div>
+    </div>
+    <div class="form-group">
+      <input type="password" formControlName = "confirm_password" name="confirm_password" id="confirm_password" tabindex="2" class="form-control" placeholder="Confirm Password" required>
+      <div *ngIf="submitted">
+			<small [hidden]="form.controls.confirm_password.value.trim() !=='' " style="color: red">Password confirmation is required</small>
+		    <small [hidden]="!form.passwordMisMatch || form.controls.confirm_password.value.trim()==='' || form.controls.password.value.trim() ==='' " style="color: red">Password mismatch</small>
+      </div>
+    </div>
+    <div class="form-group">
+      <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Register Now">
+      <div class="text-right">
+        <a (click)= "showLogin()" href="javascript:void(0)" tabindex="5" class="forgot-password">Already Registered? Login</a>
+      </div>
+    </div>
+  </form>
+</div>

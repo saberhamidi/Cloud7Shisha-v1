@@ -1,0 +1,43 @@
+<div class="container" style="padding-top: 15px;">
+	<h3>Cakes £2.49</h3>
+	<div class="row">
+		<div *ngFor="let cake of cakes; let i = index" class="col-sm-3">
+			<div class="card" style="text-align: center; margin-top: 10px;">
+			  <img style="max-height: 200px;" class="card-img-top" src="../../assets/products/{{cake.avatar}}.jpg" alt="Card image cap">
+			  <div class="card-block">
+			  	<hr>
+			    <h6 class="card-title">{{cake.name}}</h6>
+
+			    <!-- Quantity controller -->
+			    <div class="row" style="margin-bottom: 5px;">
+					<button (click) ="adjustQuantity(i, -1)" type="button" class="btn btn-sm btn-danger minus-button qButton-one" >-</button>
+					<div class="form-control">{{cake.quantity}}</div>
+				    <button (click) ="adjustQuantity(i, 1)" type="button" class="btn btn-sm btn-success plus-button qButton-two">+</button>
+				</div>
+			    <a href="javascript:void(0)" (click) = "addToBasket(cake)" class="btn btn-primary">Add to basket</a>
+			  </div>
+			</div>
+		</div>
+	</div>
+	<hr>
+	<h3>B&J Ice-Cream (100ml) £2.29</h3>
+	<div class="row">
+		<div *ngFor="let iceCream of iceCreams; let i = index" class="col-sm-3">
+			<div class="card" style="text-align: center; margin-top: 10px;">
+			  <img style="max-height: 200px;" class="card-img-top" src="../../assets/products/{{iceCream.avatar}}.jpg" alt="Card image cap">
+			  <div class="card-block">
+			  	<hr>
+			    <h6 class="card-title">{{iceCream.name}}</h6>
+
+			    <!-- Quantity controller -->
+			    <div class="row" style="margin-bottom: 5px;">
+					<button (click) ="adjustIceQuantity(i, -1)" type="button" class="btn btn-sm btn-danger minus-button qButton-one" >-</button>
+					<div class="form-control">{{iceCream.quantity}}</div>
+				    <button (click) ="adjustIceQuantity(i, 1)" type="button" class="btn btn-sm btn-success plus-button qButton-two">+</button>
+				</div>
+			    <a href="javascript:void(0)" (click) = "addToBasket(iceCream)" class="btn btn-primary">Add to basket</a>
+			  </div>
+			</div>
+		</div>
+	</div>
+</div>

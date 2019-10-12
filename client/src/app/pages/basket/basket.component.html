@@ -1,0 +1,75 @@
+<div class="container">
+<div *ngIf= "basket.items.length>=1; then fullBasket; else emptyBasket"></div>
+	<ng-template #fullBasket>
+		<!-- Items display block -->
+		<div class="row item-block" style="padding-top: 10px;" *ngFor="let item of basket.items; let i = index " [attr.data-index]="i">
+		  <div class="col-md-3"><h5 [ngClass] ="{'hidden-md-up': i>0}" class ="mobile-friendly">Product</h5>
+	  		<div *ngIf= "item.category == 'shisha'; then shisha; else others"></div>
+	  		<ng-template #shisha>
+		  		<div>
+		      		<h6>{{item.name}} <i (click) ="removeItem(item,i)" class="fa fa-window-close remove" aria-hidden="true"></i></h6>
+		      		<label class="options">Head: <span class="details">{{item.head}}</span></label ><br>
+		      		<label class="options">Hose: <span class="details">{{item.hose}}</span></label><br>
+		      		<label class="options">Base: <span class="details">{{item.base}}</span></label><br>
+		      		<label class="options">Flavours: <span class="details" *ngFor="let flavour of item.flavours">{{flavour}}, </span></label>
+		      	</div>
+	      	</ng-template>
+	      	<ng-template #others>
+	      		<h6>{{item.name}} <i (click) ="removeItem(item,i)" class="fa fa-window-close remove" aria-hidden="true"></i></h6>
+	      		<div *ngIf="item.category =='extra-head'">
+	      			<label class="options">Head: <span class="details">{{item.head}}</span></label><br>
+		      		<label class="options">Flavours: <span class="details" *ngFor="let flavour of item.flavours">{{flavour}}, </span></label>
+	      		</div>
+	      	</ng-template>
+		  </div>
+		  <div class="col-md-2"><h5 [ngClass] ="{'hidden-md-up': i>0}" class ="mobile-friendly">Unit Price</h5><span>£{{(item.costs/item.quantity).toFixed(2)}}</span></div>
+		  <div class="col-md-2">
+		  	<h5 [ngClass] ="{'hidden-md-up': i>0}" class ="mobile-friendly">Quantity</h5>
+		    <div class="row" style="margin-bottom: 5px;">
+				<button style="position: relative; width: 25px; margin-left: 10px;" (click) ="adjustCost(i, -1)" type="button" class="btn btn-sm btn-danger minus-button" >-</button>
+				<div style="position: relative; width: 50px;" class="form-control">{{item.quantity}}</div>
+			    <button style="position: relative; width: 25px;" (click) ="adjustCost(i, 1)" type="button" class="btn btn-sm btn-success plus-button">+</button>
+			</div>
+		  </div>
+		  <div class="col-md-2"><h5 [ngClass] ="{'hidden-md-up': i>0}" class ="mobile-friendly">Total price</h5><span>£{{item.costs.toFixed(2)}}</span></div>
+		</div>
+
+		<!-- Bill Summary block -->
+		<div class="clearfix full-width mb1">
+			<div class="left quarter-width px2">
+				<p class="small bottom-dotted border-color-light-gray relative mb1">
+	    			<span class="bg-white absolute t1">Subtotal</span> <span class="bg-white absolute t1 r0"> &nbsp; £{{basket.subtotal.toFixed(2)}}</span>
+	    		</p>
+	    		<p class="small bottom-dotted border-color-light-gray relative mb1" *ngIf="basket.discount <0">
+	    			<span class="bg-white absolute t1">Discount (20%)</span> <span class="bg-white absolute t1 r0"> &nbsp; -£{{(basket.discount*-1).toFixed(2)}}</span>
+	    		</p>
+			</div>	
+			<div class="col-sm-4" style="font-weight: bold; float: right;">
+	          	<hr>
+	          	<p style="float: right;">Total Cost: £{{(basket.subtotal+basket.discount).toFixed(2)}}</p>
+	        </div>
+		</div>
+		<div style="padding-left: 10px; padding-bottom: 10px; text-align: center;">
+			<small [hidden]="!promotion.error" style="color: red; display: block;">{{promotion.errMsg}}</small>
+			<input style="border-radius: 3px; padding: 2px" type="number" placeholder="Promotion code" name="promotion" [(ngModel)] = "promotion.promotionInput">
+			<button class="btn btn-info" (click) = "applyPromotion()" >Apply</button>
+		</div>
+	<!-- checkout and shopping buttons block -->
+		<div class="row proceedBtn">
+			<div class="col-md-6 align-btn">
+				<button class="btn btn-success" routerLink="/order">Continue Shopping</button>
+			</div>
+			<div class="col-md-6 align-btn">
+				<button [disabled] ="(basket.subtotal+basket.discount)<7.49" class="btn btn-info checkout" routerLink="/checkout">Checkout</button><br>
+				<small [hidden]="(basket.subtotal+basket.discount)>=7.49" style="color: red; position: relative;">Minimum spend is £7.49</small>
+			</div>
+		</div>
+	</ng-template>
+	<ng-template #emptyBasket>
+		<div class="emptyBasket">
+			<h6>Your basket is empty</h6>
+			<button class="btn btn-success" routerLink="/order">Continue Shopping</button>
+		</div>
+	</ng-template>
+</div>
+

@@ -1,0 +1,31 @@
+<div class="container">
+	<div class="row">
+		<div class="col-sm-3" routerLink="/extra-head">
+			<div class="card" style="text-align: center; margin-top: 10px;">
+			  <img style="max-height: 200px;" class="card-img-top" src="../../assets/products/extra-head.jpg" alt="Card image cap">
+			  <div class="card-block">
+			  	<hr>
+			    <h5 class="card-title">Extra Head</h5>
+			    <a href="javascript:void(0)"class="btn btn-primary">Choose</a>
+			  </div>
+			</div>
+		</div>
+		<div *ngFor="let extra of extras; let i = index" class="col-sm-3">
+			<div class="card" style="text-align: center; margin-top: 10px;">
+			  <img style="max-height: 200px;" class="card-img-top" src="../../assets/products/{{extra.avatar}}.jpg" alt="Card image cap">
+			  <div class="card-block">
+			  	<hr>
+			    <h5 class="card-title">{{extra.name}} £{{extra.costs.toFixed(2)}}</h5>
+
+			    <!-- Quantity controller -->
+			    <div class="row" style="margin-bottom: 5px;">
+					<button (click) ="adjustQuantity(i, -1)" type="button" class="btn btn-sm btn-danger minus-button qButton-one" >-</button>
+					<div class="form-control">{{extra.quantity}}</div>
+				    <button (click) ="adjustQuantity(i, 1)" type="button" class="btn btn-sm btn-success plus-button qButton-two">+</button>
+				</div>
+			    <a href="javascript:void(0)" (click) = "addToBasket(extra)" class="btn btn-primary">Add to basket</a>
+			  </div>
+			</div>
+		</div>
+	</div>
+</div>

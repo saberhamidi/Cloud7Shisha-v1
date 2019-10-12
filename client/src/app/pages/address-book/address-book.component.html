@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-9">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-12 lead">Address book<hr></div>
+          </div>
+          <div class="row" *ngIf="addresses.length >0">
+            	<div class="col-md-4">
+                <i class="fa fa-home fa-5x" aria-hidden="true"></i>
+           	  </div>
+         	    <div class="col-md-4">
+                <label style="display: block;">Addresses</label>
+                <select [(ngModel)] = "selectedAddressIndex" class="form-control">
+                  <option>Select an Address</option>
+                  <option *ngFor="let address of addresses; let i = index" value="{{i}}">{{address.streetNumber}} {{address.streetName}}</option>>
+        				</select>
+                <hr>
+              </div>
+              <div class="col-md-4" *ngIf="addresses[selectedAddressIndex]">
+                <div>
+                  <span>{{addresses[selectedAddressIndex].streetNumber}} {{addresses[selectedAddressIndex].streetName}}</span><br>
+                  <span>{{addresses[selectedAddressIndex].city}}</span><br>
+                  <span>{{addresses[selectedAddressIndex].postcode}}</span><br>
+                </div>
+                <button (click)= "deleteAddress()" class="btn btn-danger">Delete</button>
+              </div>
+          </div>
+          <div class="row" *ngIf="addresses.length == 0">
+              <div class="col-md-4">
+                <i class="fa fa-home fa-5x" aria-hidden="true"></i>
+              </div>
+              <div class="col-md-4">
+                <label>Your address book is empty!</label>
+              </div>
+          </div>
+          <hr>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

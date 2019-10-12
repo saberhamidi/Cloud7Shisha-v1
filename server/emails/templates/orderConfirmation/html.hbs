@@ -1,0 +1,163 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Order Confirmation</title>
+    </head>
+    <body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
+        <center style="font-family: palatino; font-size: 1.3rem;">
+            <table align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable">
+                <tr>
+                    <td class="alert alert-warning">
+                        <img class="navbar-brand" alt="encoded logo" src="https://aiuueg.bn1302.livefilestore.com/y4m1wGzXSNhnggX5cDQtXCOmTEbfHNtEAQWWIEUTMQ4AlLIEyyCxgOhtWXxL1-rS4guvqYTVNBFKAR7QBjM0hk7M29WeCAZVC8eUdXNRYqFl_jmcTuR6FsbOFR2XKPVxYj7wjTbTh4dDQdeqHg6RtzfYJ5Mvo0fB6Mz_ktaDoZSoVhXHUB_HflzxcJpsVtPFugfXIf-ZWuk38eqnPAR1zJrhA" style="height:70px; width: 110px;">
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" id="bodyCell">
+                        <!-- BEGIN TEMPLATE // -->
+                        <table border="0" cellpadding="0" cellspacing="0" id="templateContainer">
+                            <tr>
+                                <td align="center" valign="top">
+                                    <!-- BEGIN HEADER // -->
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateHeader">
+                                        <tr>
+                                            <td valign="top" class="bodyContent" style="padding: 0;">
+                                                <img src="https://aivyvg.bn1302.livefilestore.com/y4mdFd7qa1OC_07iWkwP9JxtRm5KDYbjh_brDz1nky01i8KyrKSxarW2yCIYQt3PZBhbPpl4yWpxznESIPk_6bZpjLGveIvrAkK29uPMt_ja8dd9kC5SoG25s5mW31iGfYTS4C_6EJEtBOONTmEpm5zACoWWc03OYSxCmCsykYxc35vwDmN4sqg1HmdW-iHz64ntXzuBYZ3JIWEgPyUCEsTzQ" style="width: 100%; max-height: 120px;" id="headerImage" mc:label="header_image" mc:edit="header_image" mc:allowdesigner mc:allowtext />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <!-- // END HEADER -->
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" valign="top">
+                                    <!-- BEGIN BODY // -->
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateBody">
+                                        <tr>
+                                            <td valign="top" class="bodyContent" mc:edit="body_content00">
+                                                <h2>Order number: {{orderNumber}}</h2>
+                                                <p>Dear {{customer.name}}</p>
+                                                <p>Thank you for your order. We heard you loud and clear, and will try to delivery everthing to you as soon as possible within the next 45 minutes. In the mean time if you have any queries in regards to your order, please do not hesitate to call us on 023 8206 0491 or email us on cloud7shisha@outlook.com.</p>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" valign="top">
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateBody">
+                                        <tr style="text-align: center;">
+                                            <td valign="top" class="bodyContent" mc:edit="body_content00">
+                                                <h2>Here is what your ordered</h2>
+                                            </td>
+                                        </tr>
+                                        <tr style="background-color: #e6ffe6;">
+                                            <td>
+                                                <table class="itemsTable">
+                                                  <tr>
+                                                    <th class="firstColumn">Product</th>
+                                                    <th>Unit Price</th>
+                                                    <th>Total Price</th>
+                                                  </tr>
+                                                  <!-- Basket iteration logic-->
+                                                  {{#each basket as |item index|}}
+                                                      <tr>
+                                                          <td style='width: 50%;'>
+                                                                <h4> {{item.quantity}}x {{item.name}}</h4>
+                                                                <div style='margin-left: 20px;'>
+                                                                {{#if (eq item.category 'shisha')}}
+                                                                    <label>Head: <span class='options'>{{item.head}}</span></label><br>
+                                                                    <label>Hose: <span class='options'>{{item.hose}}</span></label><br>
+                                                                    <label>Base: <span class='options'>{{item.base}}</span></label><br>
+                                                                    <label>Flavours:
+                                                                        <span class='options'>
+                                                                            {{#each item.flavours}}
+                                                                                 {{this}},
+                                                                            {{/each}} 
+                                                                        </span>
+                                                                    </label>
+                                                                {{else}}
+                                                                    {{#if (eq item.category 'extra-head')}}
+                                                                        <label>Head: <span class='options'>{{item.head}}</span></label><br>
+                                                                        <label>Flavours:
+                                                                            <span class='options'>
+                                                                                {{#each item.flavours}}
+                                                                                     {{this}},
+                                                                                {{/each}} 
+                                                                            </span>
+                                                                        </label>
+                                                                    {{/if}}
+                                                                {{/if}}
+                                                                </div>
+                                                            </td> 
+                                                            <td class='secondColumn'>£{{dc (div item.costs item.quantity)}}</td>
+                                                            <td class='thirdColumn'>£{{dc item.costs}}</td>
+                                                      </tr>
+                                                  {{/each}}                                                  
+                                                </table>
+                                                <hr style="margin-right: 20px; margin-left: 20px;">
+                                                <div class="clearfix full-width mb1">
+                                                    <div class="left quarter-width px2">
+                                                        <p class="small bottom-dotted border-color-light-gray relative mb1">
+                                                            <span class="bg-white absolute t1">Subtotal</span> <span class="bg-white absolute t1 r0"> &nbsp; £{{dc bill.total}}</span>
+                                                        </p>
+                                                        {{#if (lt bill.discount 0)}}
+                                                            <p class="small bottom-dotted border-color-light-gray relative mb1">
+                                                                <span class="bg-white absolute t1">Discount (20%)</span> <span class="bg-white absolute t1 r0"> &nbsp; -£{{dc (dis bill.discount)}}</span>
+                                                            </p>
+                                                        {{/if}}
+                                                    </div>  
+                                                    <div style="font-weight: bold; float: right;">
+                                                        <hr>
+                                                        <p style="float: right;">Total Cost: £{{dc (ttl bill.total bill.discount)}}</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" valign="top">
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateBody">
+                                        <tr>
+                                            <td valign="top" class="bodyContent" mc:edit="body_content00">
+                                                <p>Order received: {{dt date}} at {{tm date}}</p>
+                                                <p>Order requested: {{deliveryTime}}</p>
+                                                <p>Comment: {{comment}}</p>
+                                                <p>We will deliver your order to: {{deliveryAddress.streetNumber}} {{deliveryAddress.streetName}}, {{deliveryAddress.city}}, {{deliveryAddress.postcode}}</p>                                            
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <!-- // END BODY -->
+                            </tr>
+                            <tr>
+                                <td align="center" valign="top">
+                                    <!-- BEGIN FOOTER // -->
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateFooter">
+                                        <tr>
+                                            <td valign="top" class="footerContent" mc:edit="footer_content00">
+                                                <a href="https://www.facebook.com/Cloud7shisha/"><img src="https://aitx4g.bn1302.livefilestore.com/y4mYK3zbwioiAoZrySujrmhYqo1Aq0AQT8w9yWa3m6iAE-vVEJAmQGjvjMOlxGNFihLp1w3cYKNkZbFLxFSrVtKTG1weyvdORDc5-mhxvdBBMFVnQhR7feAvKLk1hOP7ypHBAb6OuLoxcmF2C6_JP9Fr14jk1s2vKqHNp3fdHHBdjJtGRE_JkwL2e48unUqn3yUDD4M81m8DtFwL2EEPfwQFg" style="height: 40px; width: 40px;"></a>&nbsp;&nbsp;&nbsp;<a href="https://www.instagram.com/cloud7shisha/"><img src="https://aisoqa.bn1302.livefilestore.com/y4m43k_CkcyGhhfmkWAPkI7MjYeKYAmLtewYW1kl06ruMsXQfjZ4wMDBIwO5WdIh3FlwKv9qm_Y_NeokS7dZxayYFqtHlzWKZdc01CDZjMWNNMZKVL3ZFsX3LOwgjmcstmpazxYve0Dovdil7vAD_EQCZn3IYeeP3Y2ahFN04W8wYmtA2pBwNDnRXL25gDHwvye8ZBSHli8E1TptzrKpgHrKA" style="height: 40px; width: 40px;"></a>&nbsp;&nbsp;&nbsp;<a href="https://www.snapchat.com/add/cloud7shisha"><img src="https://aiv5nq.bn1302.livefilestore.com/y4mX9tuIq2qBIAbhUvt7DKdtI2lTaekyMOtKpyDQghDUBC5UN4f4LYc09VE9TPxWjnn9pd8f484q0xIhvrlDB9rfSm2IOVUJ03n8Oo82iyt-aHuYlVy3R_JqRHDK5YKDwM42250vSDh4TOi5TvolwPM3kxKL-JGQVpBbR1M9qjVGIWFedeN6VcNwVGyz3BGq3wpii44RfMqtsqo6Hu1HlS5FA" style="height: 40px; width: 40px;"></a>&nbsp;
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td valign="top" class="footerContent" style="padding-top:0;" mc:edit="footer_content01">
+                                                <br />
+                                                <strong>Our mailing address is: </strong>
+                                                cloud7shisha@outlook.com 
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <!-- // END FOOTER -->
+                                </td>
+                            </tr>
+                        </table>
+                        <!-- // END TEMPLATE -->
+                    </td>
+                </tr>
+            </table>
+        </center>
+    </body>
+</html>

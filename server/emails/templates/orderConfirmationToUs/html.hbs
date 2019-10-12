@@ -1,0 +1,121 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Order Confirmation</title>
+    </head>
+    <body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
+        <center style="font-family: palatino; font-size: 1.3rem;">
+            <table align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable">
+                <tr>
+                    <td class="alert alert-warning">
+                        <img class="navbar-brand" alt="encoded logo" src="https://aiuueg.bn1302.livefilestore.com/y4m1wGzXSNhnggX5cDQtXCOmTEbfHNtEAQWWIEUTMQ4AlLIEyyCxgOhtWXxL1-rS4guvqYTVNBFKAR7QBjM0hk7M29WeCAZVC8eUdXNRYqFl_jmcTuR6FsbOFR2XKPVxYj7wjTbTh4dDQdeqHg6RtzfYJ5Mvo0fB6Mz_ktaDoZSoVhXHUB_HflzxcJpsVtPFugfXIf-ZWuk38eqnPAR1zJrhA" style="height:70px; width: 110px;">
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" id="bodyCell">
+                        <!-- BEGIN TEMPLATE // -->
+                        <table border="0" cellpadding="0" cellspacing="0" id="templateContainer">
+                            <tr>
+                                <td align="center" valign="top">
+                                    <!-- BEGIN BODY // -->
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateBody">
+                                        <tr>
+                                            <td valign="top" class="bodyContent" mc:edit="body_content00">
+                                                <h2>Order number: {{orderNumber}}</h2>
+                                                <p>Customer name: {{customer.name}}</p>
+                                                <p>Customer phone: {{customer.mobile}}</p>
+                                                <p>Customer email: {{customer.email}}</p>
+                                                <p>Order received: {{dt date}} at {{tm date}}</p>
+                                                <p>Order requested: {{deliveryTime}}</p>
+                                                <p>Comment: {{comment}}</p><br>
+                                                <p>Delivery address:  {{deliveryAddress.streetNumber}} {{deliveryAddress.streetName}}, {{deliveryAddress.city}}, {{deliveryAddress.postcode}}</p>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" valign="top">
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateBody">
+                                        <tr style="text-align: center;">
+                                            <td valign="top" class="bodyContent" mc:edit="body_content00">
+                                                <h2>List of items ordered</h2>
+                                            </td>
+                                        </tr>
+                                        <tr style="background-color: #e6ffe6;">
+                                            <td>
+                                                <table class="itemsTable">
+                                                  <tr>
+                                                    <th class="firstColumn">Product</th>
+                                                    <th>Unit Price</th>
+                                                    <th>Total Price</th>
+                                                  </tr>
+                                                  <!-- Basket iteration logic-->
+                                                  {{#each basket as |item index|}}
+                                                      <tr>
+                                                          <td style='width: 50%;'>
+                                                                <h4> {{item.quantity}}x {{item.name}}</h4>
+                                                                <div style='margin-left: 20px;'>
+                                                                {{#if (eq item.category 'shisha')}}
+                                                                    <label>Head: <span class='options'>{{item.head}}</span></label><br>
+                                                                    <label>Hose: <span class='options'>{{item.hose}}</span></label><br>
+                                                                    <label>Base: <span class='options'>{{item.base}}</span></label><br>
+                                                                    <label>Flavours:
+                                                                        <span class='options'>
+                                                                            {{#each item.flavours}}
+                                                                                 {{this}},
+                                                                            {{/each}} 
+                                                                        </span>
+                                                                    </label>
+                                                                {{else}}
+                                                                    {{#if (eq item.category 'extra-head')}}
+                                                                        <label>Head: <span class='options'>{{item.head}}</span></label><br>
+                                                                        <label>Flavours:
+                                                                            <span class='options'>
+                                                                                {{#each item.flavours}}
+                                                                                     {{this}},
+                                                                                {{/each}} 
+                                                                            </span>
+                                                                        </label>
+                                                                    {{/if}}
+                                                                {{/if}}
+                                                                </div>
+                                                            </td> 
+                                                            <td class='secondColumn'>£{{dc (div item.costs item.quantity)}}</td>
+                                                            <td class='thirdColumn'>£{{dc item.costs}}</td>
+                                                      </tr>
+                                                  {{/each}}                                                  
+                                                </table>
+                                                <hr style="margin-right: 20px; margin-left: 20px;">
+                                                <div class="clearfix full-width mb1">
+                                                    <div class="left quarter-width px2">
+                                                        <p class="small bottom-dotted border-color-light-gray relative mb1">
+                                                            <span class="bg-white absolute t1">Subtotal</span> <span class="bg-white absolute t1 r0"> &nbsp; £{{dc bill.total}}</span>
+                                                        </p>
+                                                        {{#if (lt bill.discount 0)}}
+                                                            <p class="small bottom-dotted border-color-light-gray relative mb1">
+                                                                <span class="bg-white absolute t1">Discount (20%)</span> <span class="bg-white absolute t1 r0"> &nbsp; -£{{dc (dis bill.discount)}}</span>
+                                                            </p>
+                                                        {{/if}}
+                                                    </div>  
+                                                    <div style="font-weight: bold; float: right;">
+                                                        <hr>
+                                                        <p style="float: right;">Total Cost: £{{dc (ttl bill.total bill.discount)}}</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <!-- End of Body -->
+                        </table>
+                        <!-- // END TEMPLATE -->
+                    </td>
+                </tr>
+            </table>
+        </center>
+    </body>
+</html>

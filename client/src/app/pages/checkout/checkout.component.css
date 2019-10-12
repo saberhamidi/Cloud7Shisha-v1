@@ -1,0 +1,18 @@
+.confirmation{
+    background-color: #D9FAD8;
+    text-align: center;
+}
+
+.terms{
+    height: 200px;
+    overflow: scroll;
+    margin-bottom: 10px;
+}
+
+li{
+    list-style-type : none;
+}
+
+.indent{
+	text-indent: 20px;
+}

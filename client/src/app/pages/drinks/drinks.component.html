@@ -1,0 +1,21 @@
+<div class="container">
+	<div class="row">
+		<div *ngFor="let drink of drinks; let i = index" class="col-sm-3">
+			<div class="card" style="text-align: center; margin-top: 10px;">
+			  <img style="max-height: 200px;" class="card-img-top" src="../../assets/products/{{drink.avatar}}.jpg" alt="Card image cap">
+			  <div class="card-block">
+			  	<hr>
+			    <h6 class="card-title">{{drink.name}} £{{drink.costs.toFixed(2)}}</h6>
+
+			    <!-- Quantity controller -->
+			    <div class="row" style="margin-bottom: 5px;">
+					<button (click) ="adjustQuantity(i, -1)" type="button" class="btn btn-sm btn-danger minus-button qButton-one" >-</button>
+					<div class="form-control">{{drink.quantity}}</div>
+				    <button (click) ="adjustQuantity(i, 1)" type="button" class="btn btn-sm btn-success plus-button qButton-two">+</button>
+				</div>
+			    <a href="javascript:void(0)" (click) = "addToBasket(drink)" class="btn btn-primary">Add to basket</a>
+			  </div>
+			</div>
+		</div>
+	</div>
+</div>

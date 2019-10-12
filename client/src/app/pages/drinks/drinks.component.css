@@ -1,0 +1,63 @@
+.form-control{
+	padding: 0;
+	position: relative; 
+	width: 50px;
+}
+
+.qButton-one{
+	position: relative; width: 25px; margin-left: 30%;
+}
+
+.qButton-two{
+	position: relative; 
+	width: 25px
+}
+.card-block{
+		padding: 5px;
+}
+
+.card{
+	background-color: #fff9f0;
+}
+
+@media only screen and (max-width: 992px) {
+	.qButton-one{
+		position: relative; width: 20px; margin-left: 20%;
+	}
+
+	.qButton-two{
+		position: relative; 
+		width: 20px
+	}
+
+	.form-control{
+		padding: 0;
+		position: relative; 
+		width: 40px;
+	}
+	.btn{
+		padding-right: 2px;
+		padding-left:  2px;
+	}
+	.card{
+		margin-right: -8px;
+		margin-left: -8px;
+	}
+
+	.card-block{
+		padding: 5px;
+	}
+}
+
+@media only screen and (max-width: 576px){
+	.qButton-one{
+		position: relative; width: 20px; margin-left: 35%;
+	}
+
+	.btn{
+	    padding-top: 0.5rem;
+	    padding-right: 1rem;
+	    padding-bottom: 0.5rem;
+	    padding-left: 1rem;
+	}
+}

@@ -1,0 +1,53 @@
+.btn-login {
+  background-color: #ffe2b6;
+  outline: none;
+  color: black;
+  font-size: 14px;
+  height: auto;
+  font-weight: normal;
+  padding: 14px 0;
+  text-transform: uppercase;
+  border-color: #59B2E6;
+}
+.btn-login:hover,
+.btn-login:focus {
+  color: black;
+  background-color: #ffedd3;
+  border-color: #53A3CD;
+}
+.forgot-password {
+  text-decoration: underline;
+  color: #888;
+}
+.forgot-password:hover,
+.forgot-password:focus {
+  text-decoration: underline;
+  color: #666;
+}
+
+.card-container{
+    width: 400px;
+    margin-top: -10px;
+    padding-top: 10px;
+}
+
+.mat-dialog-container{
+  background-color: #ffe2b6;
+}
+
+@media only screen and (max-width: 992px) {
+  .card-container{
+    width: 230px;
+    margin-top: -10px;
+    padding-top: 10px;
+  }
+}
+
+.fa{
+  color: #b30000;
+}
+
+.close{
+  float: right;
+  cursor: pointer;
+}

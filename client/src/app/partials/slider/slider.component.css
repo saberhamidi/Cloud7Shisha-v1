@@ -1,0 +1,14 @@
+.sliderImage{
+	height: 100%;
+	width: 100%;
+}
+
+@media only screen and (max-width: 576px){
+	h1{
+		font-size: 15px;
+	}
+}
+
+.order{
+	cursor: pointer;
+}

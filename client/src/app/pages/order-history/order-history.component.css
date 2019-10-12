@@ -1,0 +1,73 @@
+.ticket {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 10px;
+}
+
+.stub {
+  cursor: pointer;
+  background: #FCE1B5;
+  padding: 10px;
+  position: relative;
+  width: 70%
+}
+.stub:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-top: 10px solid #fff;
+  border-left: 10px solid #FCE1B5;
+  width: 0;
+}
+.stub:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  border-bottom: 10px solid #fff;
+  border-left: 10px solid #FCE1B5;
+  width: 0;
+}
+
+.check {
+  cursor: pointer;
+  background: #F8C471;
+  padding: 10px;
+  position: relative;
+  width: 30%;
+}
+
+.check:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-top: 10px solid #fff;
+  border-right: 10px solid #F8C471;
+  width: 0;
+}
+.check:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  border-bottom: 10px solid #fff;
+  border-right: 10px solid #F8C471;
+  width: 0;
+}
+
+.check:hover{
+  background-color: #F39C12;
+}
+
+.stub:hover{
+  background-color: #F8C471;
+}

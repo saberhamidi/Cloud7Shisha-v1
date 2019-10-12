@@ -1,0 +1,93 @@
+<div class="container">
+	<div class="row">
+       <div class="col-md-5 product-img">
+            <img style = "max-width: 100%" class = "img-responsive" src="../../assets/products/extra_head.jpg"/>
+        </div>
+        <div class="col-md-7">
+            <!-- Datos del vendedor y titulo del producto -->
+            <h3>Extra Head</h3>
+            <hr>
+            <form [formGroup] = "form" (ngSubmit) = "addToBasket(form.value)">
+            	<h5>1: Pick a head:</h5>
+            	<select required name = "head" formControlName = "head" hidden>
+            	  <option value="">Select</option>
+				  <option value="Egyption Clay">Egyption Clay</option>
+				  <option value="Apple">Apple</option>
+				  <option value="Pineapple">Pineapple</option>
+				  <option value="Orange">Orange</option>
+				</select>
+				<small [hidden]="!submitted || form.controls.head.valid" style="color: red">No head chosen!</small>
+				<div class="row">
+					<div class="col-sm-3">
+						<div headpicker (click) = "selectHead('Egyption Clay', 0)" class="options img-responsive">
+							<img style = "max-width: 100%"  src="../../assets/shisha parts/ehead.jpg">
+						</div>
+						<label class="label" for="head">Egyption Clay</label>
+					</div>
+					<div class="col-sm-3">
+						<div headpicker (click) = "selectHead('Apple', 3)" class="options img-responsive">
+							<img style = "max-width: 100%" src="../../assets/shisha parts/applehead.jpg">
+						</div>
+						<label class="label" for="head">Apple* +£3.00</label>
+					</div>
+					<div class="col-sm-3">
+						<div headpicker (click) = "selectHead('Pineapple', 3)" class="options img-responsive">
+							<img style = "max-width: 100%" src="../../assets/shisha parts/phead.jpg">
+						</div>
+						<label class="label" for="head">Pineapple* +£3.00</label>
+					</div>
+					<div class="col-sm-3">
+						<div headpicker (click) = "selectHead('Orange', 3)" class="options img-responsive">
+							<img style = "max-width: 100%" src="../../assets/shisha parts/orangehead.jpg">
+						</div>
+						<label class="label" for="head">Orange* +£3.00</label>
+					</div>
+				</div>
+				<br>
+				<h5>4: Flavours:</h5>
+				<h6>Alfakher</h6>
+				<small [hidden]="!submitted || form.controls.flavours.valid" style="color: red">No flavours chosen!</small>
+				<small [hidden]="pickedFlavours.length < 4" style="color: red">You are only allowed to choose up to three flavours!</small>
+				<ul class="row">
+					<!-- Its the flavourPicker drictive requiroment that <li> tag should be the first child!-->
+					<li *ngFor="let flavour of flavours" class="col-sm-4 flavours">
+						<input type="checkbox" name="flavours" (change) = "pickFlavour(flavour, $event.target.checked)" flavourPicker>
+						<label>{{flavour}}</label>
+					</li>
+				</ul>
+				<h6>Starbuzz* +£1.00</h6>
+				<ul class="row">
+					<!-- Its the flavourPicker drictive requiroment that <li> tag should be the first child!-->
+					<li *ngFor="let flavour of starbuzzFlavours" class="col-sm-4 flavours">
+						<input type="checkbox" name="flavours" (change) = "pickFlavour(flavour, $event.target.checked, true)" flavourPicker>
+						<label>{{flavour}}</label>
+					</li>
+				</ul>
+				<hr>
+				<div class="clearfix full-width mb1">
+		    		<div class="left quarter-width px2">
+			    		<p class="small bottom-dotted border-color-light-gray relative mb1">
+			    			<span class="bg-white absolute t1">Base Price</span> <span class="bg-white absolute t1 r0"> &nbsp; £{{costs.head.toFixed(2)}}</span>
+			    		</p>
+			    		<p class="small bottom-dotted border-color-light-gray relative mb1">
+			    			<span class="bg-white absolute t1">Flavours & Options</span> <span class="bg-white absolute t1 r0"> &nbsp; £{{(costs.options+costs.flavours).toFixed(2)}}</span>
+			    		</p>			    		
+					</div>	
+					<div class="col-sm-4" style="font-weight: bold; float: right;">
+			          	<hr>
+			          	<p style="float: right;">Total: £{{(costs.head+costs.options+costs.flavours).toFixed(2)}}</p>
+			        </div>
+	    		</div>
+				<hr>
+				<div  class="row" style="margin-bottom: 5px;">
+					<input type="submit"  class="btn btn-info" value="Add To Basket">
+					<label class="qLabel hidden-xs-down">Quantity:</label>
+					<label class="qLabel hidden-sm-up">Qty:</label>
+					<button (click) ="adjustByQuantity(-1)" type="button" class="btn btn-sm btn-danger minus-button qButton-one" >-</button>
+					<div class="form-control">{{quantity}} </div>
+				    <button (click) ="adjustByQuantity(1)" type="button" class="btn btn-sm btn-success plus-button qButton-two">+</button>
+				</div>
+            </form>
+        </div>                              		
+    </div>
+</div> 
