@@ -18,7 +18,7 @@
     "jsonwebtoken": "*",
     "moment": "^2.19.1",
     "mongoose": "*",
-    "node-sass": "^4.5.3",
+    "node-sass": "^4.13.1",
     "passport": "*",
     "passport-jwt": "*",
     "rxjs": "^5.4.3"
