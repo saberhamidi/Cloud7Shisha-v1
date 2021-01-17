@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloud7shisha-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloud7shisha-server
+  template:
+    metadata:
+      labels:
+        app: cloud7shisha-server
+    spec:
+      containers:
+      - image: saberhamidi/cloud7server:latest
+        name: server
+        ports:
+        - containerPort: 3000
+        imagePullPolicy: Always

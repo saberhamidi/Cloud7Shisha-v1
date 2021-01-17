@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloud7shisha-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloud7shisha-web
+  template:
+    metadata:
+      labels:
+        app: cloud7shisha-web
+    spec:
+      containers:
+      - image: saberhamidi/cloud7web:latest
+        name: web
+        imagePullPolicy: IfNotPresent
