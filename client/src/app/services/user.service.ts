@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import  'rxjs/add/operator/map';
 import {tokenNotExpired} from 'angular2-jwt';
+import  {serverConfig} from "../../configs/serverConfig";
 
 @Injectable()
 export class UserService {
@@ -14,11 +15,11 @@ export class UserService {
   registerUser(user){
   	let headers = new Headers();
   	headers.append('Content-Type','application/json');
-  	return this.http.post('http://localhost:3000/users/register', user, {headers:headers}).map(res =>res.json());
+  	return this.http.post(serverConfig.apiUrl+'/users/register', user, {headers:headers}).map(res =>res.json());
   }
 
   findUser(email){
-  	return this.http.get('http://localhost:3000/users/find/'+email).map(res => res.json());
+  	return this.http.get(serverConfig.apiUrl+'/users/find/'+email).map(res => res.json());
   }
 
   fetchCurrentUser(){
@@ -27,7 +28,7 @@ export class UserService {
     this.getCurrentUser();
     headers.append('Authorization', this.token);
     headers.append('Content-Type','application/json');
-    return this.http.get('http://localhost:3000/users/'+this.user.id,{headers:headers}).map(res => res.json());
+    return this.http.get(serverConfig.apiUrl+'/users/'+this.user.id,{headers:headers}).map(res => res.json());
   }
 
   updateUserProfile(newData, user_id){
@@ -35,13 +36,13 @@ export class UserService {
     let headers = new Headers();
     headers.append('Content-Type','application/json');
     headers.append('Authorization', this.token);
-    return this.http.put('http://localhost:3000/users/updateProfile/'+user_id, newData, {headers:headers}).map(res =>res.json());
+    return this.http.put(serverConfig.apiUrl+'/users/updateProfile/'+user_id, newData, {headers:headers}).map(res =>res.json());
   }
 
   authenticate(user){
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-    return this.http.post('http://localhost:3000/users/authenticate', user, {headers:headers}).map(res =>res.json());
+    return this.http.post(serverConfig.apiUrl+'/users/authenticate', user, {headers:headers}).map(res =>res.json());
   }
 
   storeAuthData(token, user){
@@ -77,7 +78,7 @@ export class UserService {
     let headers = new Headers();
     headers.append('Authorization', this.token);
     headers.append('Content-Type','application/json');
-    return this.http.post('http://localhost:3000/users/orderConfirmationEmail', order, {headers:headers}).map(res =>res.json());
+    return this.http.post(serverConfig.apiUrl+'/users/orderConfirmationEmail', order, {headers:headers}).map(res =>res.json());
   }
 
   sendWelcomeMail(user){
@@ -85,6 +86,6 @@ export class UserService {
     let headers = new Headers();
     headers.append('Authorization', this.token);
     headers.append('Content-Type','application/json');
-    return this.http.post('http://localhost:3000/users/welcomeEmail', user, {headers:headers}).map(res =>res.json());
+    return this.http.post(serverConfig.apiUrl+'/users/welcomeEmail', user, {headers:headers}).map(res =>res.json());
   }
 }

@@ -4,6 +4,7 @@ import {Subject} from "rxjs/Subject";
 import {LocalStorageService } from "angular-2-local-storage";
 import {Router} from '@angular/router';
 import * as deepEqaul from 'deep-equal';
+import  {serverConfig} from "../../configs/serverConfig";
 
 @Injectable()
 export class OrderService {
@@ -76,7 +77,7 @@ export class OrderService {
 
   	let headers = new Headers();
     headers.append('Content-Type','application/json');
-    return this.http.put('http://localhost:3000/basket/updateBasket/'+this.basket_id, basket, {headers:headers}).map(res =>res.json()).subscribe(data =>{
+    return this.http.put(serverConfig.apiUrl+'/basket/updateBasket/'+this.basket_id, basket, {headers:headers}).map(res =>res.json()).subscribe(data =>{
       this.fetchBasket(this.loadBasketId()).subscribe(data =>{
           if(data.success){
             this.basket = data.basket;
@@ -113,7 +114,7 @@ export class OrderService {
 
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-    return this.http.post('http://localhost:3000/basket/addItem', {headers:headers}).map(res =>res.json()).subscribe(data=>{
+    return this.http.post(serverConfig.apiUrl+'/basket/addItem', {headers:headers}).map(res =>res.json()).subscribe(data=>{
         if(data.success){
             this.storage.set('basket_id', data.basket._id);
             this.basket_id = data.basket._id;
@@ -123,7 +124,7 @@ export class OrderService {
   }
 
   fetchBasket(basket_id){
-    return this.http.get('http://localhost:3000/basket/fetchBasket/'+basket_id).map(res => res.json());
+    return this.http.get(serverConfig.apiUrl+'/basket/fetchBasket/'+basket_id).map(res => res.json());
   }
 
   loadBasketId(){
@@ -135,14 +136,14 @@ export class OrderService {
     let headers = new Headers();
     headers.append('Authorization',token);
     headers.append('Content-Type','application/json');
-    return this.http.post('http://localhost:3000/order', order, {headers:headers}).map(res => res.json());
+    return this.http.post(serverConfig.apiUrl+'/order', order, {headers:headers}).map(res => res.json());
   }
 
   loadOrdersByUserId(userId: string, token){
     let headers = new Headers();
     headers.append('Authorization',token);
     headers.append('Content-Type','application/json');
-    return this.http.get('http://localhost:3000/order/user/'+userId, {headers:headers}).map(res => res.json());
+    return this.http.get(serverConfig.apiUrl+'/order/user/'+userId, {headers:headers}).map(res => res.json());
   }
 
   orderAgain(items: [any]){
@@ -175,6 +176,6 @@ export class OrderService {
   applyDiscount(basket){
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-    return this.http.put('http://localhost:3000/basket/updateDiscount/', basket, {headers:headers}).map(res =>res.json());
+    return this.http.put(serverConfig.apiUrl+'/basket/updateDiscount/', basket, {headers:headers}).map(res =>res.json());
   }
 }
