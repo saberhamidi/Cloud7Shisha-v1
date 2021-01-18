@@ -13,6 +13,6 @@ spec:
         app: cloud7shisha-web
     spec:
       containers:
-      - image: saberhamidi/cloud7web:latest
+      - image: saberhamidi/cloud7web:1.0
         name: web
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always

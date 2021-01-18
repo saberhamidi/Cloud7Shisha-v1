@@ -1,4 +1,4 @@
 export const serverConfig = {
   production: false,
-  apiUrl : "/api"
+  apiUrl : "http://backend-service:3000"
 };

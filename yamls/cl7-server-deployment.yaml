@@ -13,7 +13,7 @@ spec:
         app: cloud7shisha-server
     spec:
       containers:
-      - image: saberhamidi/cloud7server:latest
+      - image: saberhamidi/cloud7server:1.0
         name: server
         ports:
         - containerPort: 3000

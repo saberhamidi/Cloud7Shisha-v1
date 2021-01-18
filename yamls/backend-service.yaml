@@ -8,4 +8,4 @@ spec:
     targetPort: 3000
   selector:
     app: cloud7shisha-server
-  type: LoadBalancer
+  type: ClusterIP
