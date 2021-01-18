@@ -18,11 +18,11 @@
         <a class="nav-link" routerLink="/menu">Menu</a>
       </li>
     </ul>
-    <div data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <div class="basket-dev" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <a class="basket" routerLink="/basket">
-        <i class="fa fa-shopping-basket fa-3x" aria-hidden="true"></i>
+        <i class="fa fa-shopping-basket fa-2x" aria-hidden="true"></i>
         <span>{{basketTotal.numberOfItems}} Item(s)</span>
-        <span>Total: £{{basketTotal.totalCost.toFixed(2)}}</span>
+        <span> Total: £{{basketTotal.totalCost.toFixed(2)}}</span>
       </a>
     </div>
     <div *ngIf= "userService.loggedIn(); then loggedIn; else loggedOut"></div>

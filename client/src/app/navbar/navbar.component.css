@@ -66,7 +66,6 @@
 
 .basket{
   color: black;
-  margin-left: 40%;
 }
 .basket:link {
     text-decoration: none;
@@ -74,6 +73,11 @@
 .basket:hover {
     text-decoration: none;
     color: #fc004c;
+}
+
+.basket-dev {
+  padding: 1px;
+  margin-left: 4%;
 }
 
 .myaccountMenu{

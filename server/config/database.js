@@ -1,5 +1,4 @@
 module.exports = {
-
-	database: 'mongodb://cloud7shisha:afghanis123@ds133496.mlab.com:33496/cloud7shisha',
+	database: 'mongodb://testuser:9eVH8YT0rVZ0X1uj@cluster0-shard-00-00.ecaql.mongodb.net:27017,cluster0-shard-00-01.ecaql.mongodb.net:27017,cluster0-shard-00-02.ecaql.mongodb.net:27017/BLOGAPP?ssl=true&replicaSet=atlas-ceza4t-shard-0&authSource=admin&retryWrites=true&w=majority',
 	secret: 'mysec'
 }
