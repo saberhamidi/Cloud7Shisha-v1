@@ -13,7 +13,7 @@ spec:
         app: cloud7shisha-db
     spec:
       volumes:
-      - name: clou7shisha-vol
+      - name: cloud7shisha-vol
         persistentVolumeClaim:
           claimName: cloud7shisha-pvc
       containers:
