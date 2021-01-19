@@ -15,7 +15,4 @@ spec:
       containers:
       - image: saberhamidi/cloud7web:1.0
         name: web
-        env:
-        - name: SERVERENDPOINT
-          value: "api.cloud7shisha.co.uk"
         imagePullPolicy: Always
