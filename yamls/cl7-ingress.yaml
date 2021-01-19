@@ -1,0 +1,21 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: cl7-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  rules:
+  - host: cloud7shisha.com
+    http:
+      paths:
+      - path: /?(.*)
+        backend:
+          serviceName: web-service
+          servicePort: 80
+      - path: /api/?(.*)
+        backend:
+          serviceName: backend-service
+          servicePort: 3000
