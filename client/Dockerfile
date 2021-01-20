@@ -3,7 +3,7 @@ WORKDIR app
 COPY . .
 RUN npm install
 RUN npm cache verify
-RUN npm run build --prod
+RUN npm run build --aot --prod --output-hashing none
 
 FROM nginx:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
