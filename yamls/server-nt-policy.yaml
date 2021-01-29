@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: cloud7-server-network-policy
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: cloud7shisha-server
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: cloud7shisha-web
+    ports:
+    - protocol: TCP
+      port: 3000
