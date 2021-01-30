@@ -8,4 +8,4 @@ spec:
   capacity:
     storage: 1G
   hostPath:
-    path: /tmp/cloud7shisha-pv
+    path: /home/gullparast/cloud7shisha-pv
