@@ -4,7 +4,7 @@ metadata:
   name: cloud7shisha-pv
 spec:
   accessModes:
-  - ReadWriteMany
+  - ReadWriteOnce
   capacity:
     storage: 1G
   storageClassName: local-storage
