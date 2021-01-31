@@ -7,5 +7,6 @@ spec:
   - ReadWriteMany
   capacity:
     storage: 1G
+  storageClassName: local-storage
   hostPath:
     path: /home/gullparast/cloud7shisha-pv
